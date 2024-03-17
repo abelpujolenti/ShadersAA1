@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2424ae3cbbade404a86c577229e9d46b
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _AlbedoMap: {instanceID: 0}
+  - _AlbedoTopMap: {instanceID: 0}
+  - _MetalnessMap: {instanceID: 0}
+  - _RoughnessMap: {instanceID: 0}
+  - _OcclusionMap: {instanceID: 0}
+  - _NormalMap: {instanceID: 0}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

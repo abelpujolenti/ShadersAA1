@@ -1,45 +1,47 @@
-Shader "AA1/Moss"
-{
-    Properties
-    {
-        _Color ("Color", Color) = (1,1,1,1)
-    }
-    SubShader
-    {
-        Tags { "RenderType"="Opaque" }
+Shader "Custom/My First Lighting Shader" {
 
-        Pass
-        {
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+	Properties {
+		_Tint ("Tint", Color) = (1, 1, 1, 1)
+		_MainTex ("Albedo", 2D) = "white" {}
+		_TopTex ("Top", 2D) = "white" {}
+		_TexScale ("Scale", float) = 1
+		[NoScaleOffset] _NormalMap ("Normals", 2D) = "bump" {}
+		_BumpScale ("Bump Scale", Float) = 1
+		[Gamma] _Metallic ("Metallic", Range(0, 1)) = 0
+		_Sharpness ("Sharpness", Range(0, 1)) = 0.5
+		_Smoothness ("Smoothness", Range(0, 1)) = 0.1
+		_DetailTex ("Detail Texture", 2D) = "gray" {}
+		[NoScaleOffset] _DetailNormalMap ("Detail Normals", 2D) = "bump" {}
+		_DetailBumpScale ("Detail Bump Scale", Float) = 1
+	}
 
-            #include "UnityCG.cginc"
+	CGINCLUDE
 
-            struct appdata
-            {
-                float4 vertex : POSITION;
-            };
+	#define BINORMAL_PER_FRAGMENT
 
-            struct v2f
-            {
-                float4 vertex : SV_POSITION;
-            };
+	ENDCG
 
-            fixed4 _Color;
+	SubShader {
 
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);              
-                return o;
-            }
+		Pass {
+			Tags {
+				"LightMode" = "ForwardBase"
+			}
 
-            fixed4 frag (v2f i) : SV_Target
-            {                
-                return _Color;
-            }
-            ENDCG
-        }
-    }
+			CGPROGRAM
+
+			#pragma target 3.0
+
+			#pragma multi_compile _ VERTEXLIGHT_ON
+
+			#pragma vertex MyVertexProgram
+			#pragma fragment MyFragmentProgram
+
+			#define FORWARD_BASE_PASS
+
+			#include "My Lighting.cginc"
+
+			ENDCG
+		}
+	}
 }
